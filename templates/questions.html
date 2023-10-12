@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Questions{% endblock %}
+{% block content %} 
+
+<form>
+    <h1>{{question}}</h1>
+    <ol class="list">
+        {% for choice in choices %}
+        <li><button type="radio">{{choice}}</button></li>
+        {% endfor %}
+    </ol>
+</form>
+
+{% endblock %}
