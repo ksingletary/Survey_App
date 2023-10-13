@@ -2,11 +2,11 @@
 {% block title %}Questions{% endblock %}
 {% block content %} 
 
-<form>
+<form action="/answer" method="POST">
     <h1>{{question}}</h1>
     <ol class="list">
         {% for choice in choices %}
-        <li><button type="radio">{{choice}}</button></li>
+        <li><button type="radio" name="answer" value={{choice}}>{{choice}}</button></li>
         {% endfor %}
     </ol>
 </form>
