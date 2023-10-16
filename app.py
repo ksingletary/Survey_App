@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, flash, jsonify
+from flask import Flask, request, render_template, redirect, flash, jsonify, session
 import surveys
 
 app = Flask(__name__)
@@ -13,6 +13,12 @@ def home_page():
     title = surveys.satisfaction_survey.title
     instructions = surveys.satisfaction_survey.instructions
     return render_template('home.html', title=title, instructions=instructions)
+
+@app.route('/session-response', methods=['POST'])
+def session_list():
+    session["responses"] = []
+    return redirect('/questions/0')
+
 
 @app.route('/questions/<int:id>')
 def show_question(id):
@@ -30,6 +36,11 @@ def show_question(id):
 def handle_answer():
     """Appends answer to responses list, and redirects to next question"""
     answer = request.form.get('answer')
+
+    res = session["responses"]
+    res.append(answer)
+    session[answer] = res
+
     responses.append(answer)
 
     if len(responses) == 4:
